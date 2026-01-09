@@ -47,9 +47,11 @@ const subscriptionSchema = new mongoose.Schema({
     },
     renewalDate: {
         type: Date,
-        required: [true, 'Subscription renewal date is required'],
+        // TODO: Fix this validation, causing error when renewalDate is not provided
+        //! required: [true, 'Subscription renewal date is required'],
         validate: {
             validator: function (value) {
+                if (!value) return true;
                 return value > this.startDate;
             },
             message: 'Renewal date must be after start date'
@@ -65,7 +67,7 @@ const subscriptionSchema = new mongoose.Schema({
     timestamps: true
 });
 
-subscriptionSchema.pre('save', function (next) {
+subscriptionSchema.pre('save', function () {
     if (!this.renewalDate) {
         const renewalPeriods = {
             daily: 1,
@@ -79,8 +81,6 @@ subscriptionSchema.pre('save', function (next) {
     }
 
     if (this.renewalDate <= new Date()) this.status = 'expired';
-
-    next();
 });
 
 const Subscription = mongoose.model('Subscription', subscriptionSchema);
