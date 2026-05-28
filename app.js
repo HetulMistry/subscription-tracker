@@ -23,7 +23,15 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/subscriptions", subscriptionRouter);
 app.use("/api/v1/workflows", workflowRouter);
-app.use("/api-docs/v1/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(
+  "/api-docs/v1/",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    customCssUrl: "/swagger-custom.css",
+    customJs: "/swagger-custom.js",
+    customSiteTitle: "Subscription Tracker API Docs",
+  }),
+);
 
 app.use(errorMiddleware);
 
