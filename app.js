@@ -16,6 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static("public"));
 app.use(arcjetMiddleware);
 
 app.use("/api/v1/auth", authRouter);
@@ -26,8 +27,12 @@ app.use("/api-docs/v1/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(errorMiddleware);
 
-app.get("/", (req, res) => {
-  res.send("Hello, World!");
+app.get("/api/v1/health", (req, res) => {
+  res.json({
+    status: "healthy",
+    uptime: process.uptime(),
+    timestamp: new Date(),
+  });
 });
 
 app.listen(PORT, async () => {

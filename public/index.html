@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subscription Tracker API - Health Check</title>
+    <meta name="description" content="Health check & endpoint documentation for the Subscription Tracker API." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ── Reset ────────────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* ── Design tokens (matched to portfolio) ───────── */
+      :root {
+        --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+        --font-display: "Space Grotesk", "Inter", sans-serif;
+        --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+        --dark-950: #08090c;
+        --dark-900: #0d1016;
+        --dark-800: #131722;
+
+        --accent-400: #38bdf8;
+        --accent-300: #7dd3fc;
+
+        --text-primary: #ffffff;
+        --text-secondary: #e5e7eb;
+        --text-muted: #94a3b8;
+        --text-subtle: #cbd5e1;
+
+        --border-subtle: rgba(255, 255, 255, 0.08);
+        --border-hover: rgba(255, 255, 255, 0.16);
+
+        --surface-bg: rgba(255, 255, 255, 0.035);
+        --surface-hover: rgba(255, 255, 255, 0.055);
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 96px;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background: linear-gradient(180deg, var(--dark-950) 0%, var(--dark-900) 44%, var(--dark-950) 100%);
+        min-height: 100vh;
+        color: var(--text-secondary);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      ::selection {
+        background: rgba(56, 189, 248, 0.24);
+        color: #ffffff;
+      }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--dark-950);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #293241;
+        border-radius: 999px;
+      }
+
+      /* ── Noise overlay (portfolio signature) ─────────── */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+        opacity: 0.42;
+      }
+
+      /* ── Ambient gradient blobs (portfolio backdrop) ── */
+      .ambient-glow {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(120px);
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.18;
+      }
+      .ambient-glow--violet {
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
+        top: -200px;
+        right: -100px;
+      }
+      .ambient-glow--sky {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, #38bdf8 0%, transparent 70%);
+        bottom: -150px;
+        left: -100px;
+      }
+      .ambient-glow--emerald {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, #10b981 0%, transparent 70%);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.08;
+      }
+
+      /* ── Layout ──────────────────────────────────────── */
+      .page-wrapper {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        padding: 48px 24px;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 760px;
+      }
+
+      /* ── Navbar bar (portfolio-style) ─────────────────── */
+      .top-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 32px;
+        height: 64px;
+        background: rgba(8, 9, 12, 0.72);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .top-bar__brand {
+        font-family: var(--font-display);
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        text-decoration: none;
+        letter-spacing: -0.01em;
+      }
+
+      .top-bar__links {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .top-bar__link {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: color 180ms ease, background 180ms ease;
+      }
+      .top-bar__link:hover {
+        color: var(--text-primary);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .top-bar__link--accent {
+        color: var(--accent-400);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .top-bar__link--accent:hover {
+        background: rgba(56, 189, 248, 0.12);
+        border-color: rgba(56, 189, 248, 0.35);
+        color: var(--accent-300);
+      }
+
+      /* ── Hero section ─────────────────────────────────── */
+      .hero {
+        margin-top: 96px;
+        margin-bottom: 48px;
+        text-align: left;
+      }
+
+      .hero__status-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        background: rgba(16, 185, 129, 0.06);
+        color: #34d399;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        margin-bottom: 24px;
+        animation: pulse-border 3s ease-in-out infinite;
+      }
+
+      @keyframes pulse-border {
+        0%, 100% { border-color: rgba(16, 185, 129, 0.2); }
+        50% { border-color: rgba(16, 185, 129, 0.45); }
+      }
+
+      .hero__status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #34d399;
+        animation: blink 2s ease-in-out infinite;
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+      }
+
+      .hero__title {
+        font-family: var(--font-display);
+        font-size: clamp(2.4rem, 5vw, 3.6rem);
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1.08;
+        letter-spacing: -0.025em;
+        margin-bottom: 16px;
+      }
+
+      .hero__subtitle {
+        font-size: 1.05rem;
+        line-height: 1.75;
+        color: var(--text-muted);
+        max-width: 600px;
+      }
+
+      /* ── Section divider ─────────────────────────────── */
+      .divider {
+        height: 1px;
+        background: var(--border-subtle);
+        margin: 0;
+        border: none;
+      }
+
+      /* ── Info grid ───────────────────────────────────── */
+      .section-shell {
+        padding: 48px 0;
+      }
+
+      .section-kicker {
+        display: inline-flex;
+        margin-bottom: 12px;
+        color: var(--accent-300);
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .section-title {
+        font-family: var(--font-display);
+        font-size: clamp(1.4rem, 3vw, 1.8rem);
+        font-weight: 650;
+        color: var(--text-primary);
+        line-height: 1.2;
+        margin-bottom: 8px;
+      }
+
+      .section-desc {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        color: var(--text-muted);
+        margin-bottom: 28px;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 14px;
+      }
+
+      .info-card {
+        border: 1px solid var(--border-subtle);
+        background: var(--surface-bg);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border-radius: 12px;
+        padding: 22px 20px;
+        transition: border-color 220ms ease, background-color 220ms ease, transform 220ms ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .info-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        opacity: 0;
+        background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.08), transparent 70%);
+        transition: opacity 220ms ease;
+      }
+      .info-card:hover {
+        border-color: rgba(56, 189, 248, 0.3);
+        background: var(--surface-hover);
+        transform: translateY(-2px);
+      }
+      .info-card:hover::before {
+        opacity: 1;
+      }
+
+      .info-card__label {
+        display: block;
+        font-size: 0.72rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+      }
+
+      .info-card__value {
+        font-family: var(--font-mono);
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--accent-400);
+        word-break: break-word;
+        position: relative;
+        z-index: 1;
+      }
+
+      .info-card__value--green {
+        color: #34d399;
+      }
+
+      /* ── Endpoints ───────────────────────────────────── */
+      .endpoint-list {
+        list-style: none;
+        display: grid;
+        gap: 8px;
+      }
+
+      .endpoint-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 16px;
+        background: var(--surface-bg);
+        border: 1px solid var(--border-subtle);
+        border-radius: 10px;
+        font-size: 0.875rem;
+        color: var(--text-subtle);
+        transition: border-color 220ms ease, background-color 220ms ease, transform 180ms ease;
+        cursor: default;
+      }
+      .endpoint-item:hover {
+        background: rgba(56, 189, 248, 0.04);
+        border-color: rgba(56, 189, 248, 0.25);
+        transform: translateX(4px);
+      }
+
+      .endpoint-method {
+        font-family: var(--font-mono);
+        font-weight: 600;
+        font-size: 0.72rem;
+        padding: 4px 10px;
+        border-radius: 6px;
+        min-width: 52px;
+        text-align: center;
+        letter-spacing: 0.02em;
+      }
+      .endpoint-method--get {
+        background: rgba(16, 185, 129, 0.1);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.15);
+      }
+      .endpoint-method--post {
+        background: rgba(56, 189, 248, 0.1);
+        color: var(--accent-400);
+        border: 1px solid rgba(56, 189, 248, 0.15);
+      }
+      .endpoint-method--put {
+        background: rgba(251, 191, 36, 0.1);
+        color: #fbbf24;
+        border: 1px solid rgba(251, 191, 36, 0.15);
+      }
+      .endpoint-method--delete {
+        background: rgba(248, 113, 113, 0.1);
+        color: #f87171;
+        border: 1px solid rgba(248, 113, 113, 0.15);
+      }
+
+      .endpoint-path {
+        font-family: var(--font-mono);
+        color: var(--text-subtle);
+        flex: 1;
+        font-weight: 500;
+        font-size: 0.84rem;
+      }
+
+      .endpoint-desc {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        font-weight: 400;
+        white-space: nowrap;
+      }
+
+      /* ── Footer ──────────────────────────────────────── */
+      .footer {
+        margin-top: 48px;
+        padding: 32px 0;
+        text-align: center;
+      }
+
+      .footer__links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .footer__link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.84rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        text-decoration: none;
+        padding: 8px 18px;
+        border-radius: 8px;
+        border: 1px solid var(--border-subtle);
+        background: var(--surface-bg);
+        transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+      }
+      .footer__link:hover {
+        color: var(--text-primary);
+        border-color: var(--border-hover);
+        background: var(--surface-hover);
+      }
+
+      .footer__link--primary {
+        color: var(--accent-400);
+        border-color: rgba(56, 189, 248, 0.2);
+        background: rgba(56, 189, 248, 0.06);
+      }
+      .footer__link--primary:hover {
+        color: var(--accent-300);
+        border-color: rgba(56, 189, 248, 0.35);
+        background: rgba(56, 189, 248, 0.12);
+      }
+
+      .footer__copy {
+        margin-top: 24px;
+        font-size: 0.78rem;
+        color: rgba(148, 163, 184, 0.5);
+        letter-spacing: 0.01em;
+      }
+
+      /* ── Entrance animations ─────────────────────────── */
+      @keyframes fade-up {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-in {
+        animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      .delay-1 { animation-delay: 0.08s; }
+      .delay-2 { animation-delay: 0.16s; }
+      .delay-3 { animation-delay: 0.24s; }
+      .delay-4 { animation-delay: 0.32s; }
+      .delay-5 { animation-delay: 0.40s; }
+      .delay-6 { animation-delay: 0.48s; }
+
+      /* ── Responsive ──────────────────────────────────── */
+      @media (max-width: 640px) {
+        .page-wrapper {
+          padding: 32px 16px;
+        }
+        .top-bar {
+          padding: 0 16px;
+        }
+        .hero {
+          margin-top: 80px;
+        }
+        .hero__title {
+          font-size: clamp(1.8rem, 7vw, 2.6rem);
+        }
+        .info-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .endpoint-desc {
+          display: none;
+        }
+        .top-bar__links {
+          gap: 4px;
+        }
+        .top-bar__link {
+          padding: 6px 10px;
+          font-size: 0.76rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Ambient gradient blobs -->
+    <div class="ambient-glow ambient-glow--violet"></div>
+    <div class="ambient-glow ambient-glow--sky"></div>
+    <div class="ambient-glow ambient-glow--emerald"></div>
+
+    <!-- Top bar -->
+    <nav class="top-bar" id="navbar">
+      <a href="/" class="top-bar__brand">Subscription Tracker</a>
+      <div class="top-bar__links">
+        <a href="#status" class="top-bar__link">Status</a>
+        <a href="#endpoints" class="top-bar__link">Endpoints</a>
+        <a href="/api-docs/v1/" class="top-bar__link top-bar__link--accent">API Docs</a>
+      </div>
+    </nav>
+
+    <div class="page-wrapper">
+      <div class="container">
+
+        <!-- Hero -->
+        <section class="hero animate-in" id="status">
+          <div class="hero__status-chip">
+            <span class="hero__status-dot"></span>
+            All systems operational
+          </div>
+          <h1 class="hero__title">Subscription<br/>Tracker API</h1>
+          <p class="hero__subtitle">
+            Health check & endpoint documentation for your subscription management API.
+            Monitor status, uptime, and explore available routes.
+          </p>
+        </section>
+
+        <hr class="divider animate-in delay-1" />
+
+        <!-- System info -->
+        <section class="section-shell animate-in delay-2" id="system-info">
+          <span class="section-kicker">System Overview</span>
+          <h2 class="section-title">Runtime Details</h2>
+          <p class="section-desc">Real-time snapshot of the running API instance.</p>
+
+          <div class="info-grid">
+            <div class="info-card animate-in delay-3">
+              <span class="info-card__label">Status</span>
+              <div class="info-card__value info-card__value--green">✓ Running</div>
+            </div>
+            <div class="info-card animate-in delay-3">
+              <span class="info-card__label">Port</span>
+              <div class="info-card__value">5500</div>
+            </div>
+            <div class="info-card animate-in delay-4">
+              <span class="info-card__label">Uptime</span>
+              <div class="info-card__value" id="uptime">—</div>
+            </div>
+            <div class="info-card animate-in delay-4">
+              <span class="info-card__label">Environment</span>
+              <div class="info-card__value">Dev</div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="divider animate-in delay-3" />
+
+        <!-- Endpoints -->
+        <section class="section-shell animate-in delay-4" id="endpoints">
+          <span class="section-kicker">Routes</span>
+          <h2 class="section-title">Available Endpoints</h2>
+          <p class="section-desc">All registered API routes with their HTTP methods.</p>
+
+          <ul class="endpoint-list">
+            <li class="endpoint-item animate-in delay-4">
+              <span class="endpoint-method endpoint-method--post">POST</span>
+              <span class="endpoint-path">/api/v1/auth/sign-up</span>
+              <span class="endpoint-desc">Register a new user</span>
+            </li>
+            <li class="endpoint-item animate-in delay-4">
+              <span class="endpoint-method endpoint-method--post">POST</span>
+              <span class="endpoint-path">/api/v1/auth/sign-in</span>
+              <span class="endpoint-desc">Authenticate user</span>
+            </li>
+            <li class="endpoint-item animate-in delay-5">
+              <span class="endpoint-method endpoint-method--post">POST</span>
+              <span class="endpoint-path">/api/v1/auth/sign-out</span>
+              <span class="endpoint-desc">End session</span>
+            </li>
+            <li class="endpoint-item animate-in delay-5">
+              <span class="endpoint-method endpoint-method--get">GET</span>
+              <span class="endpoint-path">/api/v1/users</span>
+              <span class="endpoint-desc">List all users</span>
+            </li>
+            <li class="endpoint-item animate-in delay-5">
+              <span class="endpoint-method endpoint-method--get">GET</span>
+              <span class="endpoint-path">/api/v1/subscriptions</span>
+              <span class="endpoint-desc">List subscriptions</span>
+            </li>
+            <li class="endpoint-item animate-in delay-6">
+              <span class="endpoint-method endpoint-method--post">POST</span>
+              <span class="endpoint-path">/api/v1/workflows/subscription/reminder</span>
+              <span class="endpoint-desc">Send reminders</span>
+            </li>
+          </ul>
+        </section>
+
+        <hr class="divider animate-in delay-5" />
+
+        <!-- Footer -->
+        <footer class="footer animate-in delay-6">
+          <div class="footer__links">
+            <a href="/api-docs/v1/" class="footer__link footer__link--primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+              API Documentation
+            </a>
+            <a href="https://github.com/HetulMistry" class="footer__link" target="_blank" rel="noopener noreferrer">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              GitHub
+            </a>
+            <a href="https://hetulmistry.github.io" class="footer__link" target="_blank" rel="noopener noreferrer">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              Portfolio
+            </a>
+          </div>
+          <p class="footer__copy">Subscription Tracker API &middot; Built by Hetul Mistry</p>
+        </footer>
+
+      </div>
+    </div>
+
+    <script>
+      let serverUptimeAtPageLoad = 0;
+      let pageLoadTime = Date.now();
+
+      function formatUptime(uptimeSeconds) {
+        const hours = Math.floor(uptimeSeconds / 3600);
+        const minutes = Math.floor((uptimeSeconds % 3600) / 60);
+        const seconds = Math.floor(uptimeSeconds % 60);
+        return `${hours}h ${minutes}m ${seconds}s`;
+      }
+
+      function updateUptime() {
+        const elapsedSeconds = (Date.now() - pageLoadTime) / 1000;
+        const totalUptime = serverUptimeAtPageLoad + elapsedSeconds;
+        document.getElementById("uptime").textContent = formatUptime(totalUptime);
+      }
+
+      // Fetch initial uptime from server
+      fetch("/api/v1/health")
+        .then((res) => {
+          if (!res.ok) throw new Error("Health check failed");
+          return res.json();
+        })
+        .then((data) => {
+          if (data && typeof data.uptime === "number") {
+            serverUptimeAtPageLoad = data.uptime;
+            pageLoadTime = Date.now();
+            updateUptime();
+          }
+        })
+        .catch((err) => {
+          console.error("Health check error:", err);
+          document.getElementById("uptime").textContent = "—";
+        });
+
+      // Update every second
+      setInterval(updateUptime, 1000);
+    </script>
+  </body>
+</html>
