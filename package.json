@@ -1,6 +1,6 @@
 {
-  "name": "advanced-backend",
-  "version": "0.0.0",
+  "name": "subscription-tracker",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -30,6 +30,7 @@
     "@eslint/json": "^0.14.0",
     "eslint": "^9.39.2",
     "globals": "^17.0.0",
-    "nodemon": "^3.1.11"
+    "nodemon": "^3.1.11",
+    "standard-version": "^9.5.0"
   }
 }
