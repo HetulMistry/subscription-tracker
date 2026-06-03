@@ -1,5 +1,6 @@
 import Subscription from "../models/subscription.model.js";
 import { sendReminderEmail } from "../utils/send-email.js";
+import { verifyTransporter } from "../config/nodemailer.js";
 
 export const sendTestReminder = async (req, res, next) => {
   try {
@@ -23,6 +24,17 @@ export const sendTestReminder = async (req, res, next) => {
         .json({ success: false, message: "subscription not active" });
 
     // Reuse existing sendReminderEmail utility (uses templates)
+    // Diagnostic: verify transporter first and log env info
+    try {
+      await verifyTransporter();
+      console.log("verifyTransporter: success (attempting send)");
+    } catch (vErr) {
+      console.error(
+        "verifyTransporter failed (continuing to send):",
+        vErr && vErr.message,
+      );
+    }
+
     await sendReminderEmail({
       to: subscription.user.email,
       type: "1 days before reminder",
