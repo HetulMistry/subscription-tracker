@@ -1,10 +1,21 @@
 import aj from "../config/arcjet.js";
 
 const arcjetMiddleware = async (req, res, next) => {
+  // Bypass Arcjet for health checks, swagger docs, and non-API routes (static files, homepage)
+  if (
+    req.path === "/api/v1/health" ||
+    req.path.startsWith("/api-docs") ||
+    !req.path.startsWith("/api/v1")
+  )
+    return next();
+
   try {
     const decision = await aj.protect(req, {
       requested: 1,
-      ip: req.ip || (req.headers["x-forwarded-for"] || "").split(",")[0].trim() || "127.0.0.1",
+      ip:
+        req.ip ||
+        (req.headers["x-forwarded-for"] || "").split(",")[0].trim() ||
+        "127.0.0.1",
       userId: req.ip || "guest",
     });
 
