@@ -13,6 +13,8 @@ import workflowRouter from "./routes/workflow.routes.js";
 
 const app = express();
 
+app.set("trust proxy", true);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -40,12 +42,14 @@ app.get("/api/v1/health", (req, res) => {
     status: "healthy",
     uptime: process.uptime(),
     timestamp: new Date(),
-    env: process.env.NODE_ENV || "development"
+    env: process.env.NODE_ENV || "development",
   });
 });
 
 app.listen(PORT, async () => {
-  console.log(`Server is running on ${SERVER_URL || `http://localhost:${PORT}`}`);
+  console.log(
+    `Server is running on ${SERVER_URL || `http://localhost:${PORT}`}`,
+  );
 
   await connectDb();
 });
