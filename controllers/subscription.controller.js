@@ -11,7 +11,11 @@ export const createSubscription = async (req, res, next) => {
 
     console.log("✅ Subscription created:", subscription._id);
     console.log("📅 Renewal date:", subscription.renewalDate);
-    const serverUrl = SERVER_URL || `http://localhost:${PORT}`;
+    let serverUrl = SERVER_URL || `http://localhost:${PORT}`;
+    
+    if (!serverUrl.startsWith('http://') && !serverUrl.startsWith('https://')) {
+      serverUrl = `https://${serverUrl}`;
+    }
     
     console.log("🔗 Workflow Target URL:", serverUrl);
 
