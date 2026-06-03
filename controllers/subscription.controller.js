@@ -1,6 +1,6 @@
 import Subscription from "../models/subscription.model.js";
 import { workflowClient } from "../config/upstash.js";
-import { SERVER_URL } from "../config/env.js";
+import { SERVER_URL, PORT } from "../config/env.js";
 
 export const createSubscription = async (req, res, next) => {
   try {
@@ -11,10 +11,12 @@ export const createSubscription = async (req, res, next) => {
 
     console.log("✅ Subscription created:", subscription._id);
     console.log("📅 Renewal date:", subscription.renewalDate);
-    console.log("🔗 SERVER_URL:", SERVER_URL);
+    const serverUrl = SERVER_URL || `http://localhost:${PORT}`;
+    
+    console.log("🔗 Workflow Target URL:", serverUrl);
 
     const { workflowRunId } = await workflowClient.trigger({
-      url: `${SERVER_URL}/api/v1/workflows/subscription/reminder`,
+      url: `${serverUrl}/api/v1/workflows/subscription/reminder`,
       body: {
         subscriptionId: subscription.id,
       },
