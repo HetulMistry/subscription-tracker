@@ -4,7 +4,8 @@ const arcjetMiddleware = async (req, res, next) => {
   try {
     const decision = await aj.protect(req, {
       requested: 1,
-      userId: req.ip || req.headers["x-forwarded-for"] || "guest",
+      ip: req.ip || (req.headers["x-forwarded-for"] || "").split(",")[0].trim() || "127.0.0.1",
+      userId: req.ip || "guest",
     });
 
     if (decision.isDenied()) {
