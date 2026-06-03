@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/HetulMistry/subscription-tracker/compare/v1.1.0...v1.2.0) (2026-06-03)
+
+
+### Features
+
+* enhance email configuration and add test email functionality ([3a37e2b](https://github.com/HetulMistry/subscription-tracker/commit/3a37e2b44775e23984fc93126831291f984a3838))
+
+
+### Bug Fixes
+
+* exclude health, docs, and static routes from Arcjet ([abab771](https://github.com/HetulMistry/subscription-tracker/commit/abab77102bdc12ed9a54593b113ee175e59d2447))
+
 ## 1.1.0 (2026-05-28)
 
 
