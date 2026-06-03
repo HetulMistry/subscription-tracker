@@ -1,13 +1,19 @@
 import nodemailer from "nodemailer";
-import { EMAIL_PASSWORD } from "./env.js";
+import {
+  EMAIL_PASSWORD,
+  BREVO_LOGIN,
+  BREVO_SMTP_KEY,
+  ACCOUNT_EMAIL,
+} from "./env.js";
 
-export const accountEmail = "mail@domain.com";
+export const accountEmail = ACCOUNT_EMAIL;
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp-relay.brevo.com",
+  port: 587,
   auth: {
-    user: accountEmail,
-    pass: EMAIL_PASSWORD,
+    user: BREVO_LOGIN,
+    pass: BREVO_SMTP_KEY,
   },
 });
 

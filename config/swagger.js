@@ -1,4 +1,4 @@
-import { PORT } from "./env.js";
+import { PORT, SERVER_URL, NODE_ENV } from "./env.js";
 import swaggerJSDoc from "swagger-jsdoc";
 
 const options = {
@@ -11,8 +11,8 @@ const options = {
     },
     servers: [
       {
-        url: `http://localhost:${PORT}`,
-        description: "Local server",
+        url: SERVER_URL || `http://localhost:${PORT}`,
+        description: NODE_ENV === "production" ? "Production server" : "Local server",
       },
     ],
     components: {

@@ -575,8 +575,8 @@
               <div class="info-card__value info-card__value--green">✓ Running</div>
             </div>
             <div class="info-card animate-in delay-3">
-              <span class="info-card__label">Port</span>
-              <div class="info-card__value">5500</div>
+              <span class="info-card__label">Server</span>
+              <div class="info-card__value" id="server-host">Loading...</div>
             </div>
             <div class="info-card animate-in delay-4">
               <span class="info-card__label">Uptime</span>
@@ -584,7 +584,7 @@
             </div>
             <div class="info-card animate-in delay-4">
               <span class="info-card__label">Environment</span>
-              <div class="info-card__value">Dev</div>
+              <div class="info-card__value" id="environment">Loading...</div>
             </div>
           </div>
         </section>
@@ -684,6 +684,10 @@
             pageLoadTime = Date.now();
             updateUptime();
           }
+          if (data && data.env) {
+            document.getElementById("environment").textContent = data.env === "production" ? "Prod" : "Dev";
+          }
+          document.getElementById("server-host").textContent = window.location.hostname;
         })
         .catch((err) => {
           console.error("Health check error:", err);

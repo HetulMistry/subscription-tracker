@@ -2,7 +2,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger.js";
-import { PORT } from "./config/env.js";
+import { PORT, SERVER_URL } from "./config/env.js";
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
 import subscriptionRouter from "./routes/subscription.routes.js";
@@ -40,11 +40,12 @@ app.get("/api/v1/health", (req, res) => {
     status: "healthy",
     uptime: process.uptime(),
     timestamp: new Date(),
+    env: process.env.NODE_ENV || "development"
   });
 });
 
 app.listen(PORT, async () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on ${SERVER_URL || `http://localhost:${PORT}`}`);
 
   await connectDb();
 });
