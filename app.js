@@ -11,6 +11,7 @@ import connectDb from "./database/mongodb.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import arcjetMiddleware from "./middlewares/arcjet.middleware.js";
 import workflowRouter from "./routes/workflow.routes.js";
+import testRouter from "./routes/test.routes.js";
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/subscriptions", subscriptionRouter);
 app.use("/api/v1/workflows", workflowRouter);
+app.use("/api/v1/test", testRouter);
 app.use(
   "/api-docs/v1/",
   swaggerUi.serve,

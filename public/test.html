@@ -394,16 +394,19 @@
 
           try {
             const res = await fetch(
-              `${BASE_URL}/api/v1/workflows/subscription/reminder`,
+              `${BASE_URL}/api/v1/test/send-reminder-email`,
               {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${authToken}`,
+                },
                 body: JSON.stringify({ subscriptionId }),
               },
             );
 
-            const data = await res.text();
-            logMessage(`Response: ${data}`);
+            const data = await res.json();
+            logMessage(`Response: ${JSON.stringify(data, null, 2)}`);
           } catch (err) {
             logMessage(`Error: ${err.message}`);
           }
