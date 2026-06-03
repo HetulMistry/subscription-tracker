@@ -1,309 +1,413 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>API Tester - Subscription Tracker</title>
-  <style>
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      background: #0d1117;
-      color: #c9d1d9;
-      margin: 0;
-      padding: 2rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-    }
-    h1, h2, h3 {
-      color: #58a6ff;
-    }
-    .panel {
-      background: #161b22;
-      border: 1px solid #30363d;
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-    .form-group {
-      margin-bottom: 1rem;
-    }
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
-      color: #8b949e;
-    }
-    input, select {
-      width: 100%;
-      padding: 0.5rem;
-      background: #0d1117;
-      border: 1px solid #30363d;
-      color: #c9d1d9;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-    button {
-      background: #238636;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 600;
-      width: 100%;
-      margin-top: 1rem;
-    }
-    button:hover {
-      background: #2ea043;
-    }
-    #log {
-      background: #000;
-      color: #0f0;
-      padding: 1rem;
-      font-family: monospace;
-      border-radius: 4px;
-      height: 80vh;
-      overflow-y: auto;
-      white-space: pre-wrap;
-    }
-    .status-badge {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 12px;
-      font-size: 0.8rem;
-      background: #30363d;
-    }
-  </style>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Tester - Subscription Tracker</title>
+    <style>
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: #0d1117;
+        color: #c9d1d9;
+        margin: 0;
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #58a6ff;
+      }
+      .panel {
+        background: #161b22;
+        border: 1px solid #30363d;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      .form-group {
+        margin-bottom: 1rem;
+      }
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        color: #8b949e;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 0.5rem;
+        background: #0d1117;
+        border: 1px solid #30363d;
+        color: #c9d1d9;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      button {
+        background: #238636;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 600;
+        width: 100%;
+        margin-top: 1rem;
+      }
+      button:hover {
+        background: #2ea043;
+      }
+      #log {
+        background: #000;
+        color: #0f0;
+        padding: 1rem;
+        font-family: monospace;
+        border-radius: 4px;
+        height: 80vh;
+        overflow-y: auto;
+        white-space: pre-wrap;
+      }
+      .status-badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        background: #30363d;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>🧪 Subscription API Tester</h1>
+      <p>
+        Use this tool to test Authentication and trigger Subscription Email
+        Workflows.
+      </p>
 
-  <div>
-    <h1>🧪 Subscription API Tester</h1>
-    <p>Use this tool to test Authentication and trigger Subscription Email Workflows.</p>
+      <!-- AUTHENTICATION -->
+      <div class="panel">
+        <h2>1. Authentication</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
+          <!-- Register -->
+          <div>
+            <h3>Sign Up</h3>
+            <form id="signupForm">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="suName" value="Test User" required />
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  id="suEmail"
+                  value="tester@example.com"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                <input
+                  type="password"
+                  id="suPass"
+                  value="password123"
+                  required
+                />
+              </div>
+              <button type="submit">Register</button>
+            </form>
+          </div>
 
-    <!-- AUTHENTICATION -->
-    <div class="panel">
-      <h2>1. Authentication</h2>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-        
-        <!-- Register -->
-        <div>
-          <h3>Sign Up</h3>
-          <form id="signupForm">
-            <div class="form-group">
-              <label>Name</label>
-              <input type="text" id="suName" value="Test User" required>
-            </div>
-            <div class="form-group">
-              <label>Email</label>
-              <input type="email" id="suEmail" value="tester@example.com" required>
-            </div>
-            <div class="form-group">
-              <label>Password</label>
-              <input type="password" id="suPass" value="password123" required>
-            </div>
-            <button type="submit">Register</button>
-          </form>
+          <!-- Login -->
+          <div>
+            <h3>Sign In</h3>
+            <form id="loginForm">
+              <div class="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  id="siEmail"
+                  value="tester@example.com"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                <input
+                  type="password"
+                  id="siPass"
+                  value="password123"
+                  required
+                />
+              </div>
+              <button type="submit">Login</button>
+            </form>
+          </div>
         </div>
 
-        <!-- Login -->
-        <div>
-          <h3>Sign In</h3>
-          <form id="loginForm">
-            <div class="form-group">
-              <label>Email</label>
-              <input type="email" id="siEmail" value="tester@example.com" required>
-            </div>
-            <div class="form-group">
-              <label>Password</label>
-              <input type="password" id="siPass" value="password123" required>
-            </div>
-            <button type="submit">Login</button>
-          </form>
+        <div style="margin-top: 1rem">
+          <span class="status-badge" id="authStatus">Not Authenticated</span>
         </div>
       </div>
-      
-      <div style="margin-top: 1rem;">
-        <span class="status-badge" id="authStatus">Not Authenticated</span>
-      </div>
-    </div>
 
-    <!-- SUBSCRIPTION -->
-    <div class="panel">
-      <h2>2. Create Subscription</h2>
-      <p style="font-size: 0.9rem; color: #8b949e;">This will trigger the QStash workflow to send a reminder email.</p>
-      
-      <form id="subForm">
+      <!-- SEND TEST EMAIL -->
+      <div class="panel">
+        <h2>3. Send Test Email</h2>
+        <p style="font-size: 0.9rem; color: #8b949e">
+          One-click: trigger the server workflow to send reminder email for a
+          subscription.
+        </p>
         <div class="form-group">
-          <label>Subscription Name</label>
-          <input type="text" id="subName" value="Netflix Premium" required>
+          <label>Subscription ID</label>
+          <input
+            type="text"
+            id="testSubId"
+            placeholder="Paste subscriptionId here"
+          />
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <button id="btnSendTest">Send Test Email</button>
+      </div>
+
+      <!-- SUBSCRIPTION -->
+      <div class="panel">
+        <h2>2. Create Subscription</h2>
+        <p style="font-size: 0.9rem; color: #8b949e">
+          This will trigger the QStash workflow to send a reminder email.
+        </p>
+
+        <form id="subForm">
           <div class="form-group">
-            <label>Price</label>
-            <input type="number" id="subPrice" value="199" required>
+            <label>Subscription Name</label>
+            <input type="text" id="subName" value="Netflix Premium" required />
           </div>
-          <div class="form-group">
-            <label>Currency</label>
-            <select id="subCurrency">
-              <option value="INR">INR</option>
-              <option value="USD">USD</option>
-              <option value="EUR">EUR</option>
-            </select>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
+            <div class="form-group">
+              <label>Price</label>
+              <input type="number" id="subPrice" value="199" required />
+            </div>
+            <div class="form-group">
+              <label>Currency</label>
+              <select id="subCurrency">
+                <option value="INR">INR</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Frequency</label>
+              <select id="subFreq">
+                <option value="monthly">Monthly</option>
+                <option value="yearly">Yearly</option>
+                <option value="weekly">Weekly</option>
+                <option value="daily">Daily</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select id="subCat">
+                <option value="premium">Premium</option>
+                <option value="standard">Standard</option>
+                <option value="basic">Basic</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Payment Method</label>
+              <input type="text" id="subMethod" value="Credit Card" required />
+            </div>
+            <div class="form-group">
+              <label>Start Date</label>
+              <input type="date" id="subStart" required />
+            </div>
           </div>
-          <div class="form-group">
-            <label>Frequency</label>
-            <select id="subFreq">
-              <option value="monthly">Monthly</option>
-              <option value="yearly">Yearly</option>
-              <option value="weekly">Weekly</option>
-              <option value="daily">Daily</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Category</label>
-            <select id="subCat">
-              <option value="premium">Premium</option>
-              <option value="standard">Standard</option>
-              <option value="basic">Basic</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Payment Method</label>
-            <input type="text" id="subMethod" value="Credit Card" required>
-          </div>
-          <div class="form-group">
-            <label>Start Date</label>
-            <input type="date" id="subStart" required>
-          </div>
-        </div>
-        <button type="submit" id="btnCreateSub" disabled style="background: #30363d; cursor: not-allowed;">Create Subscription (Login First)</button>
-      </form>
+          <button
+            type="submit"
+            id="btnCreateSub"
+            disabled
+            style="background: #30363d; cursor: not-allowed"
+          >
+            Create Subscription (Login First)
+          </button>
+        </form>
+      </div>
     </div>
-  </div>
 
-  <!-- CONSOLE OUTPUT -->
-  <div>
-    <h2>Terminal Output</h2>
-    <div id="log">Awaiting action...\n</div>
-  </div>
+    <!-- CONSOLE OUTPUT -->
+    <div>
+      <h2>Terminal Output</h2>
+      <div id="log">Awaiting action...\n</div>
+    </div>
 
-  <script>
-    const BASE_URL = "https://subscription-tracker.hetulmistry.tech";
-    let authToken = "";
+    <script>
+      const BASE_URL = "https://subscription-tracker.hetulmistry.tech";
+      let authToken = "";
 
-    function logMessage(msg) {
-      const logEl = document.getElementById('log');
-      const time = new Date().toLocaleTimeString();
-      logEl.innerHTML += `\n[${time}] ${msg}`;
-      logEl.scrollTop = logEl.scrollHeight;
-    }
-
-    function updateAuthStatus(token) {
-      authToken = token;
-      document.getElementById('authStatus').textContent = token ? "Authenticated ✅" : "Not Authenticated";
-      document.getElementById('authStatus').style.background = token ? "#238636" : "#30363d";
-      
-      const btn = document.getElementById('btnCreateSub');
-      if (token) {
-        btn.disabled = false;
-        btn.style.background = "#238636";
-        btn.style.cursor = "pointer";
-        btn.textContent = "Trigger Subscription & Email Workflow";
+      function logMessage(msg) {
+        const logEl = document.getElementById("log");
+        const time = new Date().toLocaleTimeString();
+        logEl.innerHTML += `\n[${time}] ${msg}`;
+        logEl.scrollTop = logEl.scrollHeight;
       }
-    }
 
-    // Default start date to today
-    document.getElementById('subStart').valueAsDate = new Date();
+      function updateAuthStatus(token) {
+        authToken = token;
+        document.getElementById("authStatus").textContent = token
+          ? "Authenticated ✅"
+          : "Not Authenticated";
+        document.getElementById("authStatus").style.background = token
+          ? "#238636"
+          : "#30363d";
 
-    // Sign Up
-    document.getElementById('signupForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      logMessage("Sending Sign Up request...");
-      
-      try {
-        const res = await fetch(`${BASE_URL}/api/v1/auth/sign-up`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: document.getElementById('suName').value,
-            email: document.getElementById('suEmail').value,
-            password: document.getElementById('suPass').value
-          })
-        });
-        const data = await res.json();
-        logMessage(`Sign Up Response: \n${JSON.stringify(data, null, 2)}`);
-        
-        if (data.data && data.data.token) {
-          updateAuthStatus(data.data.token);
+        const btn = document.getElementById("btnCreateSub");
+        if (token) {
+          btn.disabled = false;
+          btn.style.background = "#238636";
+          btn.style.cursor = "pointer";
+          btn.textContent = "Trigger Subscription & Email Workflow";
         }
-      } catch (err) {
-        logMessage(`Error: ${err.message}`);
       }
-    });
 
-    // Sign In
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      logMessage("Sending Sign In request...");
-      
-      try {
-        const res = await fetch(`${BASE_URL}/api/v1/auth/sign-in`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: document.getElementById('siEmail').value,
-            password: document.getElementById('siPass').value
-          })
+      // Default start date to today
+      document.getElementById("subStart").valueAsDate = new Date();
+
+      // Sign Up
+      document
+        .getElementById("signupForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          logMessage("Sending Sign Up request...");
+
+          try {
+            const res = await fetch(`${BASE_URL}/api/v1/auth/sign-up`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                name: document.getElementById("suName").value,
+                email: document.getElementById("suEmail").value,
+                password: document.getElementById("suPass").value,
+              }),
+            });
+            const data = await res.json();
+            logMessage(`Sign Up Response: \n${JSON.stringify(data, null, 2)}`);
+
+            if (data.data && data.data.token) {
+              updateAuthStatus(data.data.token);
+            }
+          } catch (err) {
+            logMessage(`Error: ${err.message}`);
+          }
         });
-        const data = await res.json();
-        logMessage(`Sign In Response: \n${JSON.stringify(data, null, 2)}`);
-        
-        if (data.data && data.data.token) {
-          updateAuthStatus(data.data.token);
-        }
-      } catch (err) {
-        logMessage(`Error: ${err.message}`);
-      }
-    });
 
-    // Create Subscription
-    document.getElementById('subForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!authToken) {
-        logMessage("Error: Missing authentication token.");
-        return;
-      }
+      // Sign In
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          logMessage("Sending Sign In request...");
 
-      logMessage("Sending Create Subscription request... (This will trigger QStash Workflow)");
-      
-      try {
-        const res = await fetch(`${BASE_URL}/api/v1/subscriptions`, {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${authToken}`
-          },
-          body: JSON.stringify({
-            name: document.getElementById('subName').value,
-            price: Number(document.getElementById('subPrice').value),
-            currency: document.getElementById('subCurrency').value,
-            frequency: document.getElementById('subFreq').value,
-            category: document.getElementById('subCat').value,
-            paymentMethod: document.getElementById('subMethod').value,
-            startDate: document.getElementById('subStart').value
-          })
+          try {
+            const res = await fetch(`${BASE_URL}/api/v1/auth/sign-in`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                email: document.getElementById("siEmail").value,
+                password: document.getElementById("siPass").value,
+              }),
+            });
+            const data = await res.json();
+            logMessage(`Sign In Response: \n${JSON.stringify(data, null, 2)}`);
+
+            if (data.data && data.data.token) {
+              updateAuthStatus(data.data.token);
+            }
+          } catch (err) {
+            logMessage(`Error: ${err.message}`);
+          }
         });
-        const data = await res.json();
-        logMessage(`Create Subscription Response: \n${JSON.stringify(data, null, 2)}`);
-        if(data.success && data.data.workflowRunId) {
-            logMessage(`✅ Success! Workflow Triggered! Upstash QStash will now send the email via the /workflows/subscription/reminder route.`);
-        }
-      } catch (err) {
-        logMessage(`Error: ${err.message}`);
-      }
-    });
-  </script>
-</body>
+
+      // Create Subscription
+      document
+        .getElementById("subForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          if (!authToken) {
+            logMessage("Error: Missing authentication token.");
+            return;
+          }
+
+          logMessage(
+            "Sending Create Subscription request... (This will trigger QStash Workflow)",
+          );
+
+          try {
+            const res = await fetch(`${BASE_URL}/api/v1/subscriptions`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`,
+              },
+              body: JSON.stringify({
+                name: document.getElementById("subName").value,
+                price: Number(document.getElementById("subPrice").value),
+                currency: document.getElementById("subCurrency").value,
+                frequency: document.getElementById("subFreq").value,
+                category: document.getElementById("subCat").value,
+                paymentMethod: document.getElementById("subMethod").value,
+                startDate: document.getElementById("subStart").value,
+              }),
+            });
+            const data = await res.json();
+            logMessage(
+              `Create Subscription Response: \n${JSON.stringify(data, null, 2)}`,
+            );
+            if (data.success && data.data.workflowRunId) {
+              logMessage(
+                `✅ Success! Workflow Triggered! Upstash QStash will now send the email via the /workflows/subscription/reminder route.`,
+              );
+            }
+          } catch (err) {
+            logMessage(`Error: ${err.message}`);
+          }
+        });
+
+      // Send Test Email
+      document
+        .getElementById("btnSendTest")
+        .addEventListener("click", async (e) => {
+          e.preventDefault();
+          const subscriptionId = document
+            .getElementById("testSubId")
+            .value.trim();
+          if (!subscriptionId) {
+            logMessage("Error: Please provide a subscriptionId to test.");
+            return;
+          }
+
+          logMessage(
+            `Triggering test email for subscriptionId: ${subscriptionId}`,
+          );
+
+          try {
+            const res = await fetch(
+              `${BASE_URL}/api/v1/workflows/subscription/reminder`,
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ subscriptionId }),
+              },
+            );
+
+            const data = await res.text();
+            logMessage(`Response: ${data}`);
+          } catch (err) {
+            logMessage(`Error: ${err.message}`);
+          }
+        });
+    </script>
+  </body>
 </html>
