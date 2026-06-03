@@ -5,6 +5,9 @@ const arcjetMiddleware = async (req, res, next) => {
   console.log("x-forwarded-for:", req.headers["x-forwarded-for"]);
 
   try {
+    console.log("IP:", req.ip);
+    console.log("HEADERS:", JSON.stringify(req.headers, null, 2));
+
     const decision = await aj.protect(req, { requested: 1 });
 
     if (decision.isDenied()) {
