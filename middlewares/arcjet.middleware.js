@@ -1,14 +1,11 @@
 import aj from "../config/arcjet.js";
 
 const arcjetMiddleware = async (req, res, next) => {
-  console.log("req.ip:", req.ip);
-  console.log("x-forwarded-for:", req.headers["x-forwarded-for"]);
-
   try {
-    console.log("IP:", req.ip);
-    console.log("HEADERS:", JSON.stringify(req.headers, null, 2));
-
-    const decision = await aj.protect(req, { requested: 1 });
+    const decision = await aj.protect(req, {
+      requested: 1,
+      userId: req.ip || req.headers["x-forwarded-for"] || "guest",
+    });
 
     if (decision.isDenied()) {
       if (decision.reason.isRateLimit())
