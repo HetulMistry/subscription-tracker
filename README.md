@@ -14,6 +14,8 @@ A Node.js/Express backend API for user management, authentication, and subscript
 
 ## Getting Started
 
+[![Wiki](https://img.shields.io/badge/Wiki-Documentation-blue?logo=wikidotgg)](https://subscription-tracker.wiki.hetulmistry.tech)
+
 ## Quick Start Example
 
 ```bash

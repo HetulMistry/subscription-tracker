@@ -1,6 +1,6 @@
 site_name: Subscription Tracker
 site_description: Subscription management platform built with Node.js, Express, MongoDB, Arcjet, JWT, and Upstash Workflows
-site_url: https://hetulmistry.github.io/subscription-tracker
+site_url: https://subscription-tracker.wiki.hetulmistry.tech
 
 docs_dir: wiki
 
