@@ -35,7 +35,9 @@ jobs:
         run: pip install mkdocs-material
 
       - name: Prepare Wiki Homepage
-        run: cp wiki/Home.md wiki/index.md
+        run: |
+          cp wiki/Home.md wiki/index.md
+          cp wiki/Home.md wiki/Overview.md
 
       - name: Build Docs
         run: mkdocs build
