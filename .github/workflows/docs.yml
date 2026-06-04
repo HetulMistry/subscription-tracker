@@ -6,10 +6,20 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     runs-on: ubuntu-latest
 
     steps:
@@ -22,13 +32,22 @@ jobs:
           python-version: "3.x"
 
       - name: Install MkDocs
-        run: |
-          pip install mkdocs-material
+        run: pip install mkdocs-material
 
       - name: Prepare Wiki Homepage
-        run: |
-          cp wiki/Home.md wiki/index.md
+        run: cp wiki/Home.md wiki/index.md
 
-      - name: Deploy
-        run: |
-          mkdocs gh-deploy --force
+      - name: Build Docs
+        run: mkdocs build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
