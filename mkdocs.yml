@@ -1,0 +1,66 @@
+site_name: Subscription Tracker
+site_description: Subscription management platform built with Node.js, Express, MongoDB, Arcjet, JWT, and Upstash Workflows
+site_url: https://hetulmistry.github.io/subscription-tracker
+
+docs_dir: wiki
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - Home: index.md
+
+  - Getting Started:
+      - Overview: Overview.md
+      - Getting Started: Getting-Started.md
+      - Project Structure: Project-Structure.md
+
+  - Architecture:
+      - Core Architecture: Core-Architecture.md
+      - Request Pipeline and Middleware: Request-Pipeline-and-Middleware.md
+      - Data Models: Data-Models.md
+      - Database Connection: Database-Connection.md
+
+  - API:
+      - API Documentation (Swagger): API-Documentation-(Swagger).md
+      - API Reference: API-Reference.md
+      - Authentication API: Authentication-API.md
+      - User Management API: User-Management-API.md
+      - Subscription API: Subscription-API.md
+      - Workflow and Test APIs: Workflow-and-Test-APIs.md
+
+  - Security:
+      - Security Layer: Security-Layer.md
+      - Arcjet Security Middleware: Arcjet-Security-Middleware.md
+      - JWT Authentication Middleware: JWT-Authentication-Middleware.md
+
+  - Workflows:
+      - Subscription Workflow and Email Notifications: Subscription-Workflow-and-Email-Notifications.md
+      - Upstash Workflow Engine: Upstash-Workflow-Engine.md
+      - Email Notification System: Email-Notification-System.md
+
+  - Configuration:
+      - Configuration and Environment: Configuration-and-Environment.md
+      - Environment Variables: Environment-Variables.md
+
+  - Testing:
+      - Testing and Diagnostics: Testing-and-Diagnostics.md
+      - Browser Based API Tester: Browser-Based-API-Tester.md
+      - Test Controller and Email Diagnostics: Test-Controller-and-Email-Diagnostics.md
+
+  - Reference:
+      - Glossary: Glossary.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/HetulMistry/subscription-tracker
+
+copyright: Copyright © 2025 Hetul Mistry
