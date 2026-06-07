@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Subscription Tracker API - Health Check</title>
-    <meta name="description" content="Health check & endpoint documentation for the Subscription Tracker API." />
+    <meta
+      name="description"
+      content="Health check & endpoint documentation for the Subscription Tracker API."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -53,7 +56,12 @@
 
       body {
         font-family: var(--font-sans);
-        background: linear-gradient(180deg, var(--dark-950) 0%, var(--dark-900) 44%, var(--dark-950) 100%);
+        background: linear-gradient(
+          180deg,
+          var(--dark-950) 0%,
+          var(--dark-900) 44%,
+          var(--dark-950) 100%
+        );
         min-height: 100vh;
         color: var(--text-secondary);
         -webkit-font-smoothing: antialiased;
@@ -178,7 +186,9 @@
         padding: 6px 14px;
         border-radius: 6px;
         font-weight: 500;
-        transition: color 180ms ease, background 180ms ease;
+        transition:
+          color 180ms ease,
+          background 180ms ease;
       }
       .top-bar__link:hover {
         color: var(--text-primary);
@@ -220,8 +230,13 @@
       }
 
       @keyframes pulse-border {
-        0%, 100% { border-color: rgba(16, 185, 129, 0.2); }
-        50% { border-color: rgba(16, 185, 129, 0.45); }
+        0%,
+        100% {
+          border-color: rgba(16, 185, 129, 0.2);
+        }
+        50% {
+          border-color: rgba(16, 185, 129, 0.45);
+        }
       }
 
       .hero__status-dot {
@@ -233,8 +248,13 @@
       }
 
       @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.3; }
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
       }
 
       .hero__title {
@@ -306,7 +326,10 @@
         -webkit-backdrop-filter: blur(18px);
         border-radius: 12px;
         padding: 22px 20px;
-        transition: border-color 220ms ease, background-color 220ms ease, transform 220ms ease;
+        transition:
+          border-color 220ms ease,
+          background-color 220ms ease,
+          transform 220ms ease;
         position: relative;
         overflow: hidden;
       }
@@ -316,7 +339,11 @@
         inset: 0;
         border-radius: 12px;
         opacity: 0;
-        background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.08), transparent 70%);
+        background: radial-gradient(
+          circle at 50% 0%,
+          rgba(56, 189, 248, 0.08),
+          transparent 70%
+        );
         transition: opacity 220ms ease;
       }
       .info-card:hover {
@@ -369,7 +396,10 @@
         border-radius: 10px;
         font-size: 0.875rem;
         color: var(--text-subtle);
-        transition: border-color 220ms ease, background-color 220ms ease, transform 180ms ease;
+        transition:
+          border-color 220ms ease,
+          background-color 220ms ease,
+          transform 180ms ease;
         cursor: default;
       }
       .endpoint-item:hover {
@@ -451,7 +481,10 @@
         border-radius: 8px;
         border: 1px solid var(--border-subtle);
         background: var(--surface-bg);
-        transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+        transition:
+          color 180ms ease,
+          border-color 180ms ease,
+          background 180ms ease;
       }
       .footer__link:hover {
         color: var(--text-primary);
@@ -492,12 +525,24 @@
       .animate-in {
         animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
       }
-      .delay-1 { animation-delay: 0.08s; }
-      .delay-2 { animation-delay: 0.16s; }
-      .delay-3 { animation-delay: 0.24s; }
-      .delay-4 { animation-delay: 0.32s; }
-      .delay-5 { animation-delay: 0.40s; }
-      .delay-6 { animation-delay: 0.48s; }
+      .delay-1 {
+        animation-delay: 0.08s;
+      }
+      .delay-2 {
+        animation-delay: 0.16s;
+      }
+      .delay-3 {
+        animation-delay: 0.24s;
+      }
+      .delay-4 {
+        animation-delay: 0.32s;
+      }
+      .delay-5 {
+        animation-delay: 0.4s;
+      }
+      .delay-6 {
+        animation-delay: 0.48s;
+      }
 
       /* ── Responsive ──────────────────────────────────── */
       @media (max-width: 640px) {
@@ -541,23 +586,25 @@
       <div class="top-bar__links">
         <a href="#status" class="top-bar__link">Status</a>
         <a href="#endpoints" class="top-bar__link">Endpoints</a>
-        <a href="/api-docs/v1/" class="top-bar__link top-bar__link--accent">API Docs</a>
+        <a href="/api-docs/v1/" class="top-bar__link top-bar__link--accent"
+          >API Docs</a
+        >
       </div>
     </nav>
 
     <div class="page-wrapper">
       <div class="container">
-
         <!-- Hero -->
         <section class="hero animate-in" id="status">
           <div class="hero__status-chip">
             <span class="hero__status-dot"></span>
             All systems operational
           </div>
-          <h1 class="hero__title">Subscription<br/>Tracker API</h1>
+          <h1 class="hero__title">Subscription<br />Tracker API</h1>
           <p class="hero__subtitle">
-            Health check & endpoint documentation for your subscription management API.
-            Monitor status, uptime, and explore available routes.
+            Health check & endpoint documentation for your subscription
+            management API. Monitor status, uptime, and explore available
+            routes.
           </p>
         </section>
 
@@ -567,12 +614,16 @@
         <section class="section-shell animate-in delay-2" id="system-info">
           <span class="section-kicker">System Overview</span>
           <h2 class="section-title">Runtime Details</h2>
-          <p class="section-desc">Real-time snapshot of the running API instance.</p>
+          <p class="section-desc">
+            Real-time snapshot of the running API instance.
+          </p>
 
           <div class="info-grid">
             <div class="info-card animate-in delay-3">
               <span class="info-card__label">Status</span>
-              <div class="info-card__value info-card__value--green">✓ Running</div>
+              <div class="info-card__value info-card__value--green">
+                ✓ Running
+              </div>
             </div>
             <div class="info-card animate-in delay-3">
               <span class="info-card__label">Server</span>
@@ -595,7 +646,9 @@
         <section class="section-shell animate-in delay-4" id="endpoints">
           <span class="section-kicker">Routes</span>
           <h2 class="section-title">Available Endpoints</h2>
-          <p class="section-desc">All registered API routes with their HTTP methods.</p>
+          <p class="section-desc">
+            All registered API routes with their HTTP methods.
+          </p>
 
           <ul class="endpoint-list">
             <li class="endpoint-item animate-in delay-4">
@@ -625,7 +678,9 @@
             </li>
             <li class="endpoint-item animate-in delay-6">
               <span class="endpoint-method endpoint-method--post">POST</span>
-              <span class="endpoint-path">/api/v1/workflows/subscription/reminder</span>
+              <span class="endpoint-path"
+                >/api/v1/workflows/subscription/reminder</span
+              >
               <span class="endpoint-desc">Send reminders</span>
             </li>
           </ul>
@@ -637,21 +692,69 @@
         <footer class="footer animate-in delay-6">
           <div class="footer__links">
             <a href="/api-docs/v1/" class="footer__link footer__link--primary">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"
+                />
+              </svg>
               API Documentation
             </a>
-            <a href="https://github.com/HetulMistry" class="footer__link" target="_blank" rel="noopener noreferrer">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            <a
+              href="https://github.com/HetulMistry"
+              class="footer__link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"
+                />
+              </svg>
               GitHub
             </a>
-            <a href="https://hetulmistry.github.io" class="footer__link" target="_blank" rel="noopener noreferrer">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <a
+              href="https://HetulMistry.tech"
+              class="footer__link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <line x1="2" y1="12" x2="22" y2="12" />
+                <path
+                  d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+                />
+              </svg>
               Portfolio
             </a>
           </div>
-          <p class="footer__copy">Subscription Tracker API &middot; Built by Hetul Mistry</p>
+          <p class="footer__copy">
+            Subscription Tracker API &middot; Built by Hetul Mistry
+          </p>
         </footer>
-
       </div>
     </div>
 
@@ -669,7 +772,8 @@
       function updateUptime() {
         const elapsedSeconds = (Date.now() - pageLoadTime) / 1000;
         const totalUptime = serverUptimeAtPageLoad + elapsedSeconds;
-        document.getElementById("uptime").textContent = formatUptime(totalUptime);
+        document.getElementById("uptime").textContent =
+          formatUptime(totalUptime);
       }
 
       // Fetch initial uptime from server
@@ -685,9 +789,11 @@
             updateUptime();
           }
           if (data && data.env) {
-            document.getElementById("environment").textContent = data.env === "production" ? "Prod" : "Dev";
+            document.getElementById("environment").textContent =
+              data.env === "production" ? "Prod" : "Dev";
           }
-          document.getElementById("server-host").textContent = window.location.hostname;
+          document.getElementById("server-host").textContent =
+            window.location.hostname;
         })
         .catch((err) => {
           console.error("Health check error:", err);
